@@ -14,6 +14,10 @@ import { IntentPolicyLoader } from '@/components/IntentPolicyLoader';
 import IntentsAdmin from '@/pages/IntentsAdmin';
 import AppMap from '@/pages/AppMap';
 // <custom:imports>
+const IntentVeranstaltungsanmeldungErfassenPage = lazy(() => import('@/pages/intents/VeranstaltungsanmeldungErfassenPage'));
+import { DashboardSkeleton } from '@/components/DashboardStates';
+const IntentGeraetezertifizierungErfassenPage = lazy(() => import('@/pages/intents/GeraetezertifizierungErfassenPage'));
+const IntentKundenaktivitaetErfassenPage = lazy(() => import('@/pages/intents/KundenaktivitaetErfassenPage'));
 // </custom:imports>
 
 // Lazy: public pages live outside <Layout> and only load on /#/public/:slug —
@@ -85,6 +89,9 @@ export default function App() {
                 <Route path="verwaltung/oeffentliche-seiten" element={<PublicPagesAdmin />} />
                 <Route path="verwaltung/oeffentliche-seiten/:slug/felder" element={<PublicPageFields />} />
                 {/* <custom:routes> */}
+                <Route path="intents/veranstaltungsanmeldung-erfassen" element={<Suspense fallback={<DashboardSkeleton />}><IntentVeranstaltungsanmeldungErfassenPage /></Suspense>} />
+                <Route path="intents/geraetezertifizierung-erfassen" element={<Suspense fallback={<DashboardSkeleton />}><IntentGeraetezertifizierungErfassenPage /></Suspense>} />
+                <Route path="intents/kundenaktivitaet-erfassen" element={<Suspense fallback={<DashboardSkeleton />}><IntentKundenaktivitaetErfassenPage /></Suspense>} />
                 {/* </custom:routes> */}
                 {/* An unknown hash (a bookmark from before a rebuild renamed the
                     flows, a mistyped link) must not be a blank page. */}

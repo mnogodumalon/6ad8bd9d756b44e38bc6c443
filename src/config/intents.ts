@@ -20,6 +20,7 @@
 import type { ComponentType } from 'react';
 
 // <custom:intent-imports>
+import { IconCalendarPlus, IconCertificate, IconPhoneCall } from '@tabler/icons-react';
 // </custom:intent-imports>
 
 export interface IntentLink {
@@ -42,6 +43,9 @@ export interface IntentLink {
 
 export const INTENTS: IntentLink[] = [
   // <custom:intents>
+  { path: '/intents/veranstaltungsanmeldung-erfassen', label: { de: 'Anmeldung zu Veranstaltung erfassen', en: 'Register for an event' }, icon: IconCalendarPlus, description: 'Ein Teilnehmer wird für eine Veranstaltung angemeldet, optional mit einem bestehenden Kontakt verknüpft.' },
+  { path: '/intents/geraetezertifizierung-erfassen', label: { de: 'Gerätezertifizierung erfassen', en: 'Record device certification' }, icon: IconCertificate, description: 'Eine Prüfung eines Prüfgeräts wird mit Ergebnis und Zertifikat dokumentiert.' },
+  { path: '/intents/kundenaktivitaet-erfassen', label: { de: 'Kundenaktivität erfassen', en: 'Log customer activity' }, icon: IconPhoneCall, description: 'Ein Anruf, Besuch, Angebot oder Folgetermin wird einem Kunden und einem seiner Kontakte zugeordnet.' },
   // </custom:intents>
 ];
 
@@ -52,7 +56,7 @@ export const INTENTS: IntentLink[] = [
  * purpose — a scaffold update resets it to false (self-healing if Phase 2
  * never ran).
  */
-export const INTENTS_PENDING = true;
+export const INTENTS_PENDING = false;
 
 /**
  * When the Phase-1 bundle was deployed (ISO, set by the service together with

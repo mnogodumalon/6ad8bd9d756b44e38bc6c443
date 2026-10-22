@@ -1,0 +1,64 @@
+{
+  "KundenDialog.tsx": {
+    "firmenname": "z. B. Muster GmbH",
+    "branche": "z. B. Maschinenbau",
+    "strasse": "z. B. Hauptstraße",
+    "hausnummer": "z. B. 12a",
+    "plz": "z. B. 80331",
+    "ort": "z. B. München",
+    "email": "z. B. info@muster.de",
+    "webseite": "z. B. www.muster.de"
+  },
+  "KontakteDialog.tsx": {
+    "kunde": "Welcher Kunde?",
+    "vorname": "z. B. Anna",
+    "nachname": "z. B. Müller",
+    "position": "z. B. Einkaufsleiterin",
+    "email": "z. B. anna.mueller@firma.de"
+  },
+  "VeranstaltungenDialog.tsx": {
+    "titel": "z. B. Produktschulung 2026",
+    "termin": "Wann findet es statt?",
+    "ort": "z. B. Schulungsraum Berlin",
+    "beschreibung": "Worum geht es?",
+    "max_teilnehmer": "z. B. 20"
+  },
+  "KundenaktivitaetenDialog.tsx": {
+    "kunde": "Welcher Kunde?",
+    "kontakt": "Welcher Ansprechpartner?",
+    "zeitpunkt": "Wann fand es statt?",
+    "betreff": "z. B. Angebot für Prüfgerät",
+    "notizen": "Was wurde besprochen?"
+  },
+  "PruefgeraeteDialog.tsx": {
+    "bezeichnung": "z. B. Isolationsprüfgerät",
+    "hersteller": "z. B. Fluke",
+    "typ": "z. B. 1507",
+    "seriennummer": "z. B. SN-2026-0001",
+    "kunde": "Welcher Kunde?",
+    "kaufdatum": "Wann wurde es gekauft?",
+    "preis": "z. B. 489,00",
+    "zertifizierungsintervall": "z. B. 12"
+  },
+  "GeraetezertifizierungenDialog.tsx": {
+    "pruefgeraet": "Welches Prüfgerät?",
+    "pruefdatum": "Wann wurde geprüft?",
+    "zertifikatsnummer": "z. B. ZE-2026-001",
+    "hinweise": "Auflagen oder Auffälligkeiten"
+  },
+  "AnmeldungenDialog.tsx": {
+    "firma": "z. B. Muster GmbH",
+    "bemerkung": "Besondere Wünsche oder Hinweise",
+    "veranstaltung": "Welche Veranstaltung?",
+    "kontakt": "Welcher Kontakt?",
+    "teilnehmer_vorname": "z. B. Anna",
+    "teilnehmer_nachname": "z. B. Müller",
+    "teilnehmer_email": "z. B. anna@muster.de"
+  },
+  "AnwenderzertifizierungenDialog.tsx": {
+    "anwender": "Welcher Anwender?",
+    "schulungsart": "z. B. Geräteeinweisung",
+    "schulungsdatum": "Wann fand die Schulung statt?",
+    "gueltig_bis": "Bis wann gültig?"
+  }
+}

@@ -1,0 +1,199 @@
+{
+  "version": 1,
+  "language": "de",
+  "understanding": {
+    "summary": "Die Anwendung verwaltet Kunden und Interessenten mit ihren Kontakten, Aktivitäten, Prüfgeräten und Zertifizierungen sowie Veranstaltungen mit Anmeldungen. Der Wunsch, bei Kontakten ein Foto hochzuladen, ist bereits erfüllt: Das Feld „Foto“ existiert in den Kontakten und wird im Datensatzformular befüllt.",
+    "roles": [
+      "Vertrieb",
+      "Service und Prüfung",
+      "Veranstaltungsorganisation",
+      "Administration"
+    ],
+    "main_tasks": [
+      "Kunden und Kontakte pflegen",
+      "Kundenaktivitäten festhalten",
+      "Prüfgeräte und ihre Zertifizierungen verwalten",
+      "Veranstaltungen planen und Anmeldungen erfassen",
+      "Anwenderschulungen dokumentieren"
+    ],
+    "platform_roles": [
+      {
+        "persona": "Vertrieb",
+        "role": "standard",
+        "apps": [
+          "kunden",
+          "kontakte",
+          "kundenaktivitaeten"
+        ]
+      },
+      {
+        "persona": "Service und Prüfung",
+        "role": "datenverarbeitung",
+        "apps": [
+          "pruefgeraete",
+          "geraetezertifizierungen",
+          "anwenderzertifizierungen"
+        ]
+      },
+      {
+        "persona": "Veranstaltungsorganisation",
+        "role": "datenverarbeitung",
+        "apps": [
+          "veranstaltungen",
+          "anmeldungen",
+          "kontakte"
+        ]
+      },
+      {
+        "persona": "Administration",
+        "role": "administrator",
+        "apps": [
+          "kunden",
+          "kontakte",
+          "veranstaltungen",
+          "kundenaktivitaeten",
+          "pruefgeraete",
+          "geraetezertifizierungen",
+          "anmeldungen",
+          "anwenderzertifizierungen"
+        ]
+      }
+    ]
+  },
+  "flows": [
+    {
+      "slug": "veranstaltungsanmeldung-erfassen",
+      "label": {
+        "de": "Anmeldung zu Veranstaltung erfassen",
+        "en": "Register for an event"
+      },
+      "description": "Ein Teilnehmer wird für eine Veranstaltung angemeldet, optional mit einem bestehenden Kontakt verknüpft.",
+      "priority": "must",
+      "writes": [
+        {
+          "entity": "anmeldungen",
+          "op": "create",
+          "when": "always",
+          "fields": {
+            "veranstaltung": "picked",
+            "kontakt": "picked",
+            "teilnehmer_vorname": "user",
+            "teilnehmer_nachname": "user",
+            "teilnehmer_email": "user",
+            "teilnehmer_telefon": "user",
+            "firma": "user",
+            "bemerkung": "user"
+          },
+          "needs": {}
+        }
+      ],
+      "required": [],
+      "brief": "# Flow `veranstaltungsanmeldung-erfassen` — Anmeldung zu Veranstaltung erfassen\nEin Teilnehmer wird für eine Veranstaltung angemeldet, optional mit einem bestehenden Kontakt verknüpft.\n\n## Your hook — import it, never rebuild what it owns\n`import { useVeranstaltungsanmeldungErfassenFlow } from '@/lib/journey/flows/VeranstaltungsanmeldungErfassen';` — generated from the Schreibliste below. It OWNS the form(s), one record search per picked field (columns and filter from the plan) and the submit plan with every fixed and derived value. You compose: `flow.forms.<entity>` for <Bound>/<Field>, `{...flow.picks.<field>.select} {...flow.pick('<field>')}` (or `flow.pickMany` for a multi pick) for <EntitySelectStep>, `flow.validateStep(n)` in StepNav.onNext, `flow.submit` + `flow.formList` for SummaryStep/SuccessStep, `flow.reset()`; what the hook does not own reads through its door `flow.port` — availability `useOccupancy(flow.port, '<entity>', { resource })`, a count `useRecordCount(flow.port, …)` — never import servicePort next to the hook. Options: `steps` (field → step), `items` (how a hit reads, per pick: veranstaltung, kontakt), `initial`, `messages`. The hook's docblock in .lane-context.md shows the exact call. Never import servicePort, useStepForm, useJourneySubmit, useRecordSearch or useDashboardData in this page — check-intents refuses a page that uses the hook and any of them.\n\n## Steps (in this order)\n1. Veranstaltung auswählen\n2. Bestehenden Kontakt auswählen oder Teilnehmerdaten eingeben\n3. Anmeldung speichern\n\n## Schreibliste — the ONLY writes this flow makes (the gate compares your plan steps with this list)\n- creates `anmeldungen`:\n    - `veranstaltung`: from the record the user picks in this flow\n    - `kontakt`: from the record the user picks in this flow\n    - `teilnehmer_vorname`: the user enters it (bind it through the layer: form.field/…)\n    - `teilnehmer_nachname`: the user enters it (bind it through the layer: form.field/…)\n    - `teilnehmer_email`: the user enters it (bind it through the layer: form.field/…)\n    - `teilnehmer_telefon`: the user enters it (bind it through the layer: form.field/…)\n    - `firma`: the user enters it (bind it through the layer: form.field/…)\n    - `bemerkung`: the user enters it (bind it through the layer: form.field/…)\n\n## Reads\n- `veranstaltungen` columns titel, termin, ort, max_teilnehmer, status\n- `kontakte` columns vorname, nachname, email, kunde\n\n## Success page\n- shows: `anmeldungen.teilnehmer_nachname`, `veranstaltungen.titel`\n\n## Never write these — another flow or a tool owns them\n- `geraetezertifizierungen.pruefgeraet` (owner: intent `geraetezertifizierung-erfassen`)\n- `geraetezertifizierungen.pruefdatum` (owner: intent `geraetezertifizierung-erfassen`)\n- `geraetezertifizierungen.ergebnis` (owner: intent `geraetezertifizierung-erfassen`)\n- `geraetezertifizierungen.zertifikatsnummer` (owner: intent `geraetezertifizierung-erfassen`)\n- `geraetezertifizierungen.zertifikat` (owner: intent `geraetezertifizierung-erfassen`)\n- `geraetezertifizierungen.hinweise` (owner: intent `geraetezertifizierung-erfassen`)\n- `kundenaktivitaeten.kunde` (owner: intent `kundenaktivitaet-erfassen`)\n- `kundenaktivitaeten.kontakt` (owner: intent `kundenaktivitaet-erfassen`)\n- `kundenaktivitaeten.aktivitaetsart` (owner: intent `kundenaktivitaet-erfassen`)\n- `kundenaktivitaeten.zeitpunkt` (owner: intent `kundenaktivitaet-erfassen`)\n- `kundenaktivitaeten.betreff` (owner: intent `kundenaktivitaet-erfassen`)\n- `kundenaktivitaeten.notizen` (owner: intent `kundenaktivitaet-erfassen`)\n"
+    },
+    {
+      "slug": "geraetezertifizierung-erfassen",
+      "label": {
+        "de": "Gerätezertifizierung erfassen",
+        "en": "Record device certification"
+      },
+      "description": "Eine Prüfung eines Prüfgeräts wird mit Ergebnis und Zertifikat dokumentiert.",
+      "priority": "must",
+      "writes": [
+        {
+          "entity": "geraetezertifizierungen",
+          "op": "create",
+          "when": "always",
+          "fields": {
+            "pruefgeraet": "picked",
+            "pruefdatum": "user",
+            "ergebnis": "user",
+            "zertifikatsnummer": "user",
+            "zertifikat": "user",
+            "hinweise": "user"
+          },
+          "needs": {}
+        }
+      ],
+      "required": [],
+      "brief": "# Flow `geraetezertifizierung-erfassen` — Gerätezertifizierung erfassen\nEine Prüfung eines Prüfgeräts wird mit Ergebnis und Zertifikat dokumentiert.\n\n## Your hook — import it, never rebuild what it owns\n`import { useGeraetezertifizierungErfassenFlow } from '@/lib/journey/flows/GeraetezertifizierungErfassen';` — generated from the Schreibliste below. It OWNS the form(s), one record search per picked field (columns and filter from the plan) and the submit plan with every fixed and derived value. You compose: `flow.forms.<entity>` for <Bound>/<Field>, `{...flow.picks.<field>.select} {...flow.pick('<field>')}` (or `flow.pickMany` for a multi pick) for <EntitySelectStep>, `flow.validateStep(n)` in StepNav.onNext, `flow.submit` + `flow.formList` for SummaryStep/SuccessStep, `flow.reset()`; what the hook does not own reads through its door `flow.port` — availability `useOccupancy(flow.port, '<entity>', { resource })`, a count `useRecordCount(flow.port, …)` — never import servicePort next to the hook. Options: `steps` (field → step), `items` (how a hit reads, per pick: pruefgeraet), `initial`, `messages`. The hook's docblock in .lane-context.md shows the exact call. Never import servicePort, useStepForm, useJourneySubmit, useRecordSearch or useDashboardData in this page — check-intents refuses a page that uses the hook and any of them.\n\n## Steps (in this order)\n1. Prüfgerät auswählen\n2. Prüfdatum und Ergebnis eingeben\n3. Zertifikat anhängen und speichern\n\n## Schreibliste — the ONLY writes this flow makes (the gate compares your plan steps with this list)\n- creates `geraetezertifizierungen`:\n    - `pruefgeraet`: from the record the user picks in this flow\n    - `pruefdatum`: the user enters it (bind it through the layer: form.field/…)\n    - `ergebnis`: the user enters it (bind it through the layer: form.field/…)\n    - `zertifikatsnummer`: the user enters it (bind it through the layer: form.field/…)\n    - `zertifikat`: the user enters it (bind it through the layer: form.field/…)\n    - `hinweise`: the user enters it (bind it through the layer: form.field/…)\n\n## Reads\n- `pruefgeraete` columns bezeichnung, hersteller, typ, seriennummer, kunde\n\n## Success page\n- shows: `geraetezertifizierungen.zertifikatsnummer`, `pruefgeraete.bezeichnung`\n\n## Never write these — another flow or a tool owns them\n- `anmeldungen.veranstaltung` (owner: intent `veranstaltungsanmeldung-erfassen`)\n- `anmeldungen.kontakt` (owner: intent `veranstaltungsanmeldung-erfassen`)\n- `anmeldungen.teilnehmer_vorname` (owner: intent `veranstaltungsanmeldung-erfassen`)\n- `anmeldungen.teilnehmer_nachname` (owner: intent `veranstaltungsanmeldung-erfassen`)\n- `anmeldungen.teilnehmer_email` (owner: intent `veranstaltungsanmeldung-erfassen`)\n- `anmeldungen.teilnehmer_telefon` (owner: intent `veranstaltungsanmeldung-erfassen`)\n- `anmeldungen.firma` (owner: intent `veranstaltungsanmeldung-erfassen`)\n- `anmeldungen.bemerkung` (owner: intent `veranstaltungsanmeldung-erfassen`)\n- `kundenaktivitaeten.kunde` (owner: intent `kundenaktivitaet-erfassen`)\n- `kundenaktivitaeten.kontakt` (owner: intent `kundenaktivitaet-erfassen`)\n- `kundenaktivitaeten.aktivitaetsart` (owner: intent `kundenaktivitaet-erfassen`)\n- `kundenaktivitaeten.zeitpunkt` (owner: intent `kundenaktivitaet-erfassen`)\n- `kundenaktivitaeten.betreff` (owner: intent `kundenaktivitaet-erfassen`)\n- `kundenaktivitaeten.notizen` (owner: intent `kundenaktivitaet-erfassen`)\n"
+    },
+    {
+      "slug": "kundenaktivitaet-erfassen",
+      "label": {
+        "de": "Kundenaktivität erfassen",
+        "en": "Log customer activity"
+      },
+      "description": "Ein Anruf, Besuch, Angebot oder Folgetermin wird einem Kunden und einem seiner Kontakte zugeordnet.",
+      "priority": "must",
+      "writes": [
+        {
+          "entity": "kundenaktivitaeten",
+          "op": "create",
+          "when": "always",
+          "fields": {
+            "kunde": "picked",
+            "kontakt": "picked",
+            "aktivitaetsart": "user",
+            "zeitpunkt": "user",
+            "betreff": "user",
+            "notizen": "user"
+          },
+          "needs": {}
+        }
+      ],
+      "required": [],
+      "brief": "# Flow `kundenaktivitaet-erfassen` — Kundenaktivität erfassen\nEin Anruf, Besuch, Angebot oder Folgetermin wird einem Kunden und einem seiner Kontakte zugeordnet.\n\n## Your hook — import it, never rebuild what it owns\n`import { useKundenaktivitaetErfassenFlow } from '@/lib/journey/flows/KundenaktivitaetErfassen';` — generated from the Schreibliste below. It OWNS the form(s), one record search per picked field (columns and filter from the plan) and the submit plan with every fixed and derived value. You compose: `flow.forms.<entity>` for <Bound>/<Field>, `{...flow.picks.<field>.select} {...flow.pick('<field>')}` (or `flow.pickMany` for a multi pick) for <EntitySelectStep>, `flow.validateStep(n)` in StepNav.onNext, `flow.submit` + `flow.formList` for SummaryStep/SuccessStep, `flow.reset()`; what the hook does not own reads through its door `flow.port` — availability `useOccupancy(flow.port, '<entity>', { resource })`, a count `useRecordCount(flow.port, …)` — never import servicePort next to the hook. Options: `steps` (field → step), `items` (how a hit reads, per pick: kunde, kontakt), `initial`, `messages`. The hook's docblock in .lane-context.md shows the exact call. Never import servicePort, useStepForm, useJourneySubmit, useRecordSearch or useDashboardData in this page — check-intents refuses a page that uses the hook and any of them.\n\n## Steps (in this order)\n1. Kunden auswählen\n2. Kontakt des Kunden auswählen\n3. Art, Zeitpunkt, Betreff und Notizen eingeben\n\n## Schreibliste — the ONLY writes this flow makes (the gate compares your plan steps with this list)\n- creates `kundenaktivitaeten`:\n    - `kunde`: from the record the user picks in this flow\n    - `kontakt`: from the record the user picks in this flow\n    - `aktivitaetsart`: the user enters it (bind it through the layer: form.field/…)\n    - `zeitpunkt`: the user enters it (bind it through the layer: form.field/…)\n    - `betreff`: the user enters it (bind it through the layer: form.field/…)\n    - `notizen`: the user enters it (bind it through the layer: form.field/…)\n\n## Reads\n- `kunden` columns firmenname, kundentyp, ort\n- `kontakte` columns vorname, nachname, position, kunde\n\n## Success page\n- shows: `kundenaktivitaeten.betreff`, `kunden.firmenname`\n\n## Never write these — another flow or a tool owns them\n- `anmeldungen.veranstaltung` (owner: intent `veranstaltungsanmeldung-erfassen`)\n- `anmeldungen.kontakt` (owner: intent `veranstaltungsanmeldung-erfassen`)\n- `anmeldungen.teilnehmer_vorname` (owner: intent `veranstaltungsanmeldung-erfassen`)\n- `anmeldungen.teilnehmer_nachname` (owner: intent `veranstaltungsanmeldung-erfassen`)\n- `anmeldungen.teilnehmer_email` (owner: intent `veranstaltungsanmeldung-erfassen`)\n- `anmeldungen.teilnehmer_telefon` (owner: intent `veranstaltungsanmeldung-erfassen`)\n- `anmeldungen.firma` (owner: intent `veranstaltungsanmeldung-erfassen`)\n- `anmeldungen.bemerkung` (owner: intent `veranstaltungsanmeldung-erfassen`)\n- `geraetezertifizierungen.pruefgeraet` (owner: intent `geraetezertifizierung-erfassen`)\n- `geraetezertifizierungen.pruefdatum` (owner: intent `geraetezertifizierung-erfassen`)\n- `geraetezertifizierungen.ergebnis` (owner: intent `geraetezertifizierung-erfassen`)\n- `geraetezertifizierungen.zertifikatsnummer` (owner: intent `geraetezertifizierung-erfassen`)\n- `geraetezertifizierungen.zertifikat` (owner: intent `geraetezertifizierung-erfassen`)\n- `geraetezertifizierungen.hinweise` (owner: intent `geraetezertifizierung-erfassen`)\n"
+    }
+  ],
+  "public_pages": [],
+  "tools": [],
+  "covered_by_platform": [
+    {
+      "wish": "Füge einen Upload „Foto“ zu Kontakte hinzu.",
+      "feature": "record_form"
+    },
+    {
+      "wish": "Fotos und Dokumente an Kontakten ablegen",
+      "feature": "record_attachments"
+    }
+  ],
+  "ownership": {
+    "anmeldungen": {
+      "veranstaltung": "intent:veranstaltungsanmeldung-erfassen",
+      "kontakt": "intent:veranstaltungsanmeldung-erfassen",
+      "teilnehmer_vorname": "intent:veranstaltungsanmeldung-erfassen",
+      "teilnehmer_nachname": "intent:veranstaltungsanmeldung-erfassen",
+      "teilnehmer_email": "intent:veranstaltungsanmeldung-erfassen",
+      "teilnehmer_telefon": "intent:veranstaltungsanmeldung-erfassen",
+      "firma": "intent:veranstaltungsanmeldung-erfassen",
+      "bemerkung": "intent:veranstaltungsanmeldung-erfassen"
+    },
+    "geraetezertifizierungen": {
+      "pruefgeraet": "intent:geraetezertifizierung-erfassen",
+      "pruefdatum": "intent:geraetezertifizierung-erfassen",
+      "ergebnis": "intent:geraetezertifizierung-erfassen",
+      "zertifikatsnummer": "intent:geraetezertifizierung-erfassen",
+      "zertifikat": "intent:geraetezertifizierung-erfassen",
+      "hinweise": "intent:geraetezertifizierung-erfassen"
+    },
+    "kundenaktivitaeten": {
+      "kunde": "intent:kundenaktivitaet-erfassen",
+      "kontakt": "intent:kundenaktivitaet-erfassen",
+      "aktivitaetsart": "intent:kundenaktivitaet-erfassen",
+      "zeitpunkt": "intent:kundenaktivitaet-erfassen",
+      "betreff": "intent:kundenaktivitaet-erfassen",
+      "notizen": "intent:kundenaktivitaet-erfassen"
+    }
+  },
+  "dashboard": {
+    "focus": [
+      "Anstehende Veranstaltungen und Anmeldungen",
+      "Letzte Kundenaktivitäten",
+      "Prüfgeräte mit anstehender Zertifizierung"
+    ],
+    "hints": [
+      "Das Feld „Foto“ bei Kontakten ist bereits vorhanden und wird im Formular hochgeladen."
+    ],
+    "wishes": []
+  }
+}

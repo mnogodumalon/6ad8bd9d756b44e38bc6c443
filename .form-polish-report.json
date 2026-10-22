@@ -1,0 +1,65 @@
+{
+  "entities": {
+    "Kunden": {
+      "placeholders_set": 8,
+      "defaults_keys": [
+        "kundentyp"
+      ],
+      "computed_keys": [],
+      "reason": "Reine Stammdaten ohne numerische Felder, daher keine Formeln."
+    },
+    "Kontakte": {
+      "placeholders_set": 5,
+      "defaults_keys": [],
+      "computed_keys": [],
+      "reason": "Kontakte sind reine Stammdaten ohne numerische Felder, daher keine Formeln."
+    },
+    "Veranstaltungen": {
+      "placeholders_set": 5,
+      "defaults_keys": [
+        "status"
+      ],
+      "computed_keys": [],
+      "reason": "Keine Formeln, da es nur ein Datumsfeld und keine numerische Berechnungskette gibt; Status startet mit Geplant."
+    },
+    "Kundenaktivitäten": {
+      "placeholders_set": 5,
+      "defaults_keys": [
+        "zeitpunkt"
+      ],
+      "computed_keys": [],
+      "reason": "Keine Formeln, da die Aktivitäten keine numerischen Felder oder Datumspaare enthalten; nur der Zeitpunkt erhält den Standardwert heute."
+    },
+    "Prüfgeräte": {
+      "placeholders_set": 8,
+      "defaults_keys": [
+        "kaufdatum",
+        "zertifizierungsintervall"
+      ],
+      "computed_keys": [],
+      "reason": "Keine Formel, da Preis und Intervall unabhängige Stammdaten ohne Datumspaar oder Rechenkette sind."
+    },
+    "Gerätezertifizierungen": {
+      "placeholders_set": 4,
+      "defaults_keys": [
+        "pruefdatum"
+      ],
+      "computed_keys": [],
+      "reason": "Keine Formel, da nur ein Prüfdatum ohne Datumspaar oder Mengenfeld vorhanden ist und Preis bzw. Intervall hier nicht zu einem Betrag führen."
+    },
+    "Anmeldungen": {
+      "placeholders_set": 7,
+      "defaults_keys": [],
+      "computed_keys": [],
+      "reason": "Keine Formel, da kein Datumspaar, keine Menge und kein Preis vorhanden ist; max_teilnehmer ist nur eine Kapazität und kein Rechenfaktor."
+    },
+    "Anwenderzertifizierungen": {
+      "placeholders_set": 4,
+      "defaults_keys": [
+        "schulungsdatum"
+      ],
+      "computed_keys": [],
+      "reason": "Keine Formel, da es keine numerischen Felder gibt und Datum und Gültigkeit kein Dauerfeld bilden."
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "pages": {
+    "en": {
+      "Aktivität erfassen": "Record activity",
+      "Aktuell sind keine Veranstaltungen geplant.": "No events are currently scheduled.",
+      "Als Nächstes: „{0}“ am {1} mit {2} Anmeldungen.": "Next up: \"{0}\" on {1} with {2} registrations.",
+      "Als durchgeführt markieren": "Mark as completed",
+      "Anmeldung öffnen": "Open registration",
+      "Anmeldungen dafür": "Registrations for this event",
+      "Anstehende Veranstaltungen": "Upcoming events",
+      "Bald fällig": "Due soon",
+      "Keine Prüfung in den nächsten 60 Tagen fällig.": "No inspection due in the next 60 days.",
+      "Letzte Kundenaktivitäten": "Recent customer activities",
+      "Neue Veranstaltung": "New event",
+      "Noch keine Aktivitäten erfasst.": "No activities recorded yet.",
+      "Prüfgeräte mit anstehender Zertifizierung": "Test devices with upcoming certification",
+      "Prüfung erfassen": "Record inspection",
+      "Prüfung fällig (60 Tage)": "Inspection due (60 days)",
+      "Prüfung überfällig: {0}.": "Inspection overdue: {0}.",
+      "Status auf „{0}“ gesetzt": "Status set to \"{0}\"",
+      "noch nie geprüft": "never inspected",
+      "Überfällig": "Overdue"
+    }
+  },
+  "v": 1
+}
